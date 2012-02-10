@@ -30,9 +30,13 @@ void ChatClient::read(){
          udpSocket->readDatagram(datagram.data(), datagram.size(),
                                  &sender, &senderPort);
 
-         parent->;
+         parent->nachricht(datagram);
      }
 
+}
+
+void ChatClient::write(QByteArray msg){
+	udpSocket->write(msg);
 }
 
 ChatClient::~ChatClient() {
