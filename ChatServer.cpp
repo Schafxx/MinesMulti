@@ -31,6 +31,10 @@ void ChatServer::read(){
 	
 }
 
+void ChatServer::write(QByteArray msg){
+	udpSocket->write(msg);
+}
+
 ChatServer::~ChatServer() {
 	// TODO Auto-generated destructor stub
 }
