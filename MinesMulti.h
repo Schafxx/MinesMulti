@@ -24,6 +24,7 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void FeldSichtbar();
 		void Verbinden();
 		void read();
+		void nachricht(QByteArray msg);
 	public:
 		QPushButton *bt, *bt2, *bt3, *bt4;
 		QTextBrowser *tb;
