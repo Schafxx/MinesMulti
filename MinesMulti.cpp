@@ -91,7 +91,7 @@ void MinesMulti::FeldSichtbar(){
 	}
 }
 
-MinesMulti::nachricht(QByteArray msg){
+void MinesMulti::nachricht(QByteArray msg){
 	tb->append(msg);
 }
 
