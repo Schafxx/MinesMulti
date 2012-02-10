@@ -16,6 +16,8 @@ class ChatClient {
 public:
 	ChatClient(QObject *parent = 0, QString ip = "");
 	virtual ~ChatClient();
+	void read();
+	void write(QByteArray msg);
 private:
 	QUdpSocket *udpSocket;
 };
