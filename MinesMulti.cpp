@@ -72,7 +72,12 @@ void MinesMulti::Client(){
 }
 
 void MinesMulti::Senden(){
-
+	if (cs){
+		cs->write(te2->getText());
+	}
+	if (cc){
+		cc->write(te2->getText());
+	}
 }
 
 void MinesMulti::Verbinden(){
@@ -81,6 +86,9 @@ void MinesMulti::Verbinden(){
 
 void MinesMulti::read(){
 	cs->read();
+}
+void MinesMulti::readC(){
+	cc->read();
 }
 
 void MinesMulti::FeldSichtbar(){
