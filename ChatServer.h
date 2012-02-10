@@ -18,6 +18,7 @@ public:
 
 public:
 	void read();
+	void write(QByteArray msg);
 private:
 	QUdpSocket *udpSocket;
 };
