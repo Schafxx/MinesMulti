@@ -25,13 +25,15 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void Verbinden();
 		void read();
 		void readC();
-		void nachricht(QByteArray msg);
+
 	public:
+		void nachricht(QByteArray msg);
 		QPushButton *bt, *bt2, *bt3, *bt4;
 		QTextBrowser *tb;
 		QTextEdit *te, *te2;
 		QPushButton *Minen[10][10];
 		ChatServer *cs;
+		ChatClient *cc;
 		QTextDocument *doc;
 };
 #endif //MINEN_H

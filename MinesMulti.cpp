@@ -73,10 +73,13 @@ void MinesMulti::Client(){
 
 void MinesMulti::Senden(){
 	if (cs){
-		cs->write(te2->getText());
+		QByteArray QBA = new QByteArray;
+		QString Inhalt = te2->toPlainText();
+		QBA.append(Inhalt)
+		cs->write((QByteArray)te2->toPlainText());
 	}
 	if (cc){
-		cc->write(te2->getText());
+		cc->write(QByteArray(te2->toPlainText(), );
 	}
 }
 
@@ -85,10 +88,10 @@ void MinesMulti::Verbinden(){
 }
 
 void MinesMulti::read(){
-	cs->read();
+	te->append(cs->read());
 }
 void MinesMulti::readC(){
-	cc->read();
+	te->append(cc->read());
 }
 
 void MinesMulti::FeldSichtbar(){

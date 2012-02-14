@@ -11,13 +11,15 @@
 #include <QtNetwork>
 #include <QUdpSocket>
 #include <QHostAddress>
+#include <QByteArray>
+
 class ChatServer {
 public:
 	ChatServer(QObject *parent = 0);
 	virtual ~ChatServer();
 
 public:
-	void read();
+	QByteArray read();
 	void write(QByteArray msg);
 private:
 	QUdpSocket *udpSocket;
