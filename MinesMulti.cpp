@@ -72,14 +72,13 @@ void MinesMulti::Client(){
 }
 
 void MinesMulti::Senden(){
+	QByteArray QBA = new QByteArray(te2->toPlainText(), te2->toPlainText().size());
 	if (cs){
-		QByteArray QBA = new QByteArray;
-		QString Inhalt = te2->toPlainText();
-		QBA.append(Inhalt)
-		cs->write((QByteArray)te2->toPlainText());
+		cs->write(QBA);
 	}
 	if (cc){
-		cc->write(QByteArray(te2->toPlainText(), );
+		
+		cc->write(QBA);
 	}
 }
 
