@@ -84,15 +84,11 @@ void MinesMulti::Senden(){
 	}catch(...){
 
 	}
- 	try {
- 		if (cs->b){
-			cs->write(QBA);
-		}
-		if (cc->b){
-			cc->write(QBA);
-		}
-	} catch(...){
-		
+	if (cs->b){
+		cs->write(QBA);
+	}
+	if (cc->b){
+		cc->write(QBA);
 	}
 	te->clear();
 }

@@ -26,8 +26,8 @@ void ChatServer::read(){
 	while (udpSocket->hasPendingDatagrams()){
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
-		QHostAddress sender;
-		quint16 senderPort;
+		sender;
+		senderPort;
 		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
 		emit rec(datagram);//
 	}
@@ -35,7 +35,7 @@ void ChatServer::read(){
 }
 
 void ChatServer::write(QByteArray *msg){
-		udpSocket->write(*msg);
+	udpSocket->writeDatagram(*msg, sender, senderPort);
 }
 
 ChatServer::~ChatServer() {

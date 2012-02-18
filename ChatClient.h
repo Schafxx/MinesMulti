@@ -22,6 +22,7 @@ public:
 public slots:
 	void read();
 private:
+	QHostAddress *host;
 	QUdpSocket *udpSocket;
 signals:
 	void rec(QByteArray D);

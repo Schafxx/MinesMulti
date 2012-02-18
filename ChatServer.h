@@ -19,6 +19,8 @@ public:
 	ChatServer(QObject *parent = 0, bool a = false);
 	virtual ~ChatServer();
 	bool b;
+	quint16 senderPort;
+	QHostAddress sender;
 
 public slots:
 	void read();
