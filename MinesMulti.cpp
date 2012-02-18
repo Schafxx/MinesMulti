@@ -63,6 +63,7 @@ void MinesMulti::Server(){
 	bt3->setVisible(true);
 	cs = new ChatServer(this,true);
 	cc = new ChatClient(this, te2->toPlainText(), false);
+	connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
 	FeldSichtbar();
 }
 void MinesMulti::Client(){
@@ -93,20 +94,22 @@ void MinesMulti::Senden(){
 	} catch(...){
 		
 	}
+	te->clear();
 }
 
 void MinesMulti::Verbinden(){
 	cc = new ChatClient(this, te2->toPlainText(), true);
 	te2->setVisible(false);
 	bt4->setVisible(false);
+	connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(readC(QByteArray)));
 
 }
 
-void MinesMulti::read(){
-	tb->append(cs->read());
+void MinesMulti::read(QByteArray D){
+	tb->append(D);
 }
-void MinesMulti::readC(){
-	tb->append(cc->read());
+void MinesMulti::readC(QByteArray D){
+	tb->append(D);
 }
 
 void MinesMulti::FeldSichtbar(){

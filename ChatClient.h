@@ -12,15 +12,19 @@
 #include <QUdpSocket>
 #include <QHostAddress>
 
-class ChatClient {
+class ChatClient : public QObject{
+	Q_OBJECT
 public:
 	ChatClient(QObject *parent = 0, QString ip = "", bool a = false);
 	virtual ~ChatClient();
-	QByteArray read();
 	void write(QByteArray *msg);
 	bool b;
+public slots:
+	void read();
 private:
 	QUdpSocket *udpSocket;
+signals:
+	void rec(QByteArray D);
 };
 
 #endif /* CHATCLIENT_H_ */

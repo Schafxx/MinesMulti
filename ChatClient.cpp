@@ -11,6 +11,7 @@
 #include <QUdpSocket>
 #include <QByteArray>
 #include <QHostAddress>
+#include <QDebug>
 
 ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
 	b = a;
@@ -18,12 +19,12 @@ ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
 		udpSocket = new QUdpSocket(parent);;
 		QHostAddress *host = new QHostAddress(ip);
 		udpSocket->bind(*host, 7755);
-		parent->connect(udpSocket, SIGNAL(readyRead()), parent, SLOT(readC()));
+		parent->connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 	}
 
 }
 
-QByteArray ChatClient::read(){
+void ChatClient::read(){
      while (udpSocket->hasPendingDatagrams()) {
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
@@ -33,7 +34,7 @@ QByteArray ChatClient::read(){
          udpSocket->readDatagram(datagram.data(), datagram.size(),
                                  &sender, &senderPort);
 
-         return datagram;
+         emit rec(datagram);
      }
 
 }

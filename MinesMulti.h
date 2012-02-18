@@ -24,8 +24,8 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void Senden();
 		void FeldSichtbar();
 		void Verbinden();
-		void read();
-		void readC();
+		void read(QByteArray D);
+		void readC(QByteArray D);
 
 	public:
 		void nachricht(QByteArray msg);

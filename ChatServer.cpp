@@ -11,24 +11,25 @@
 #include <QUdpSocket>
 #include <QByteArray>
 #include <QHostAddress>
-
+#include <QDebug>
 ChatServer::ChatServer(QObject *parent, bool a) {
 	b = a;
 	if (a){
 		udpSocket = new QUdpSocket(parent);
 		udpSocket->bind(QHostAddress::LocalHost, 7755);
 
-		parent->connect(udpSocket, SIGNAL(readyRead()), parent, SLOT(read()));
+		parent->connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
+
 	}
 }
-QByteArray ChatServer::read(){
+void ChatServer::read(){
 	while (udpSocket->hasPendingDatagrams()){
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
 		QHostAddress sender;
 		quint16 senderPort;
 		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-		return datagram;
+		emit rec(datagram);//
 	}
 	
 }

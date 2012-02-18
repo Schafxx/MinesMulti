@@ -13,17 +13,20 @@
 #include <QHostAddress>
 #include <QByteArray>
 
-class ChatServer {
+class ChatServer : public QObject {
+	Q_OBJECT
 public:
 	ChatServer(QObject *parent = 0, bool a = false);
 	virtual ~ChatServer();
 	bool b;
 
 public slots:
-	QByteArray read();
+	void read();
 	void write(QByteArray *msg);
 private:
 	QUdpSocket *udpSocket;
+signals:
+	void rec(QByteArray D);
 };
 
 #endif /* CHATSERVER_H_ */
