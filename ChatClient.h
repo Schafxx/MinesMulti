@@ -14,10 +14,11 @@
 
 class ChatClient {
 public:
-	ChatClient(QObject *parent = 0, QString ip = "");
+	ChatClient(QObject *parent = 0, QString ip = "", bool a = false);
 	virtual ~ChatClient();
-	void read();
-	void write(QByteArray msg);
+	QByteArray read();
+	void write(QByteArray *msg);
+	bool b;
 private:
 	QUdpSocket *udpSocket;
 };

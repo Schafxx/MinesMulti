@@ -7,10 +7,12 @@
 
 #ifndef FELD_H_
 #define FELD_H_
-
-class Feld {
+#include <QPushButton>
+#include <QWidget>
+#include <QMainWindow>
+class Feld : public QPushButton{
 public:
-	Feld();
+	Feld(QWidget *parent);
 	virtual ~Feld();
 };
 

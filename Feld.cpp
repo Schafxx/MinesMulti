@@ -6,9 +6,11 @@
  */
 
 #include "Feld.h"
-
-Feld::Feld() {
+#include <QPushButton>
+#include <QWidget>
+Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 	// TODO Auto-generated constructor stub
+
 
 }
 

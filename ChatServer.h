@@ -15,12 +15,13 @@
 
 class ChatServer {
 public:
-	ChatServer(QObject *parent = 0);
+	ChatServer(QObject *parent = 0, bool a = false);
 	virtual ~ChatServer();
+	bool b;
 
-public:
+public slots:
 	QByteArray read();
-	void write(QByteArray msg);
+	void write(QByteArray *msg);
 private:
 	QUdpSocket *udpSocket;
 };

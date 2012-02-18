@@ -12,15 +12,18 @@
 #include <QByteArray>
 #include <QHostAddress>
 
-ChatClient::ChatClient(QObject *parent, QString ip) {
-	udpSocket = new QUdpSocket(parent);;
-	QHostAddress *host = new QHostAddress(ip);
-	udpSocket->bind(*host, 7755);
-	parent->connect(udpSocket, SIGNAL(readyRead()), this, SLOT(readC()));
+ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
+	b = a;
+	if (a){
+		udpSocket = new QUdpSocket(parent);;
+		QHostAddress *host = new QHostAddress(ip);
+		udpSocket->bind(*host, 7755);
+		parent->connect(udpSocket, SIGNAL(readyRead()), parent, SLOT(readC()));
+	}
 
 }
 
-void ChatClient::read(){
+QByteArray ChatClient::read(){
      while (udpSocket->hasPendingDatagrams()) {
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
@@ -30,13 +33,13 @@ void ChatClient::read(){
          udpSocket->readDatagram(datagram.data(), datagram.size(),
                                  &sender, &senderPort);
 
-         parent->nachricht(datagram);
+         return datagram;
      }
 
 }
 
-void ChatClient::write(QByteArray msg){
-	udpSocket->write(msg);
+void ChatClient::write(QByteArray *msg){
+	udpSocket->write(*msg);
 }
 
 ChatClient::~ChatClient() {

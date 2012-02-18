@@ -39,7 +39,7 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
 
     for(int a = 0; a < 10; a++){
     	for(int b = 0; b < 10; b++){
-    		Minen[a][b] = new QPushButton("",this);
+    		Minen[a][b] = new Feld(this);
     		Minen[a][b]->setFixedSize(50,50);
     		Minen[a][b]->move(a*50+50,b*50+50);
     		Minen[a][b]->setVisible(false);
@@ -59,7 +59,9 @@ void MinesMulti::Server(){
 	tb->setVisible(true);
 	te->setVisible(true);
 	bt3->setVisible(true);
-	cs = new ChatServer(this);
+	cs = new ChatServer(this,true);
+	cc = new ChatClient(this, te2->toPlainText(), false);
+	FeldSichtbar();
 }
 void MinesMulti::Client(){
 	bt->setVisible(false);
@@ -69,33 +71,45 @@ void MinesMulti::Client(){
 	bt3->setVisible(true);
 	te2->setVisible(true);
 	bt4->setVisible(true);
+	cs = new ChatServer(this,false);
 }
 
 void MinesMulti::Senden(){
-	QByteArray QBA = new QByteArray(te2->toPlainText(), te2->toPlainText().size());
-	if (cs){
-		cs->write(QBA);
+	try{
+		const char *text = te2->toPlainText().toLatin1();
+		QBA = new QByteArray(text);
+	}catch(...){
+
 	}
-	if (cc){
+ 	try {
+ 		if (cs->b){
+			cs->write(QBA);
+		}
+		if (cc->b){
+			cc->write(QBA);
+		}
+	} catch(...){
 		
-		cc->write(QBA);
 	}
 }
 
 void MinesMulti::Verbinden(){
+	cc = new ChatClient(this, te2->toPlainText(), true);
+	te2->setVisible(false);
+	bt4->setVisible(false);
 
 }
 
 void MinesMulti::read(){
-	te->append(cs->read());
+	tb->append(cs->read());
 }
 void MinesMulti::readC(){
-	te->append(cc->read());
+	tb->append(cc->read());
 }
 
 void MinesMulti::FeldSichtbar(){
 	for(int a = 0; a < 10; a++){
-		for(int b = 0; b < 10; a++){
+		for(int b = 0; b < 10; b++){
 			Minen[a][b]->setVisible(true);
 		}
 	}
