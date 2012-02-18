@@ -10,10 +10,16 @@
 #include <QPushButton>
 #include <QWidget>
 #include <QMainWindow>
-class Feld : public QPushButton{
+#include <QObject>
+class Feld : public QPushButton {
+	Q_OBJECT
+
 public:
 	Feld(QWidget *parent);
 	virtual ~Feld();
+
+public slots:
+	void klick();
 };
 
 #endif /* FELD_H_ */

@@ -1,6 +1,7 @@
 #include "MinesMulti.h"
 #include "GameServer.h"
 #include "ChatServer.h"
+#include "Feld.h"
 #include <QPushButton>
 #include <QTextBrowser>
 #include <QTextEdit>
@@ -43,6 +44,7 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     		Minen[a][b]->setFixedSize(50,50);
     		Minen[a][b]->move(a*50+50,b*50+50);
     		Minen[a][b]->setVisible(false);
+    		connect(Minen[a][b], SIGNAL(clicked()), Minen[a][b], SLOT(klick()));
     	}
 
     }

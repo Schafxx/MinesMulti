@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MinesMulti.h'
 **
-** Created: Sat Feb 18 18:07:33 2012
+** Created: Sat Feb 18 19:42:04 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
