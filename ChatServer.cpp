@@ -16,7 +16,7 @@
 ChatServer::ChatServer(QObject *parent, bool a) {
 	b = a;
 	if (a){
-		QHostAddress *addr = new QHostAddress("127.0.0.1");
+		QHostAddress *addr = new QHostAddress("0.0.0.0");
 		udpSocket = new QUdpSocket(parent);
 		udpSocket->bind(*addr, 7755);
 
