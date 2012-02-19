@@ -41,7 +41,7 @@ void ChatServer::read(){
 void ChatServer::write(QByteArray *msg){
 	qDebug() << sender;
 	QHostAddress *addr = new QHostAddress("192.168.2.102");
-	udpSocket->writeDatagram(msg->data(), *addr, 7755);
+	udpSocket->writeDatagram(*msg, *addr, 7755);
 }
 
 ChatServer::~ChatServer() {
