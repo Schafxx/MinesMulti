@@ -18,16 +18,17 @@ ChatServer::ChatServer(QObject *parent, bool a) {
 		udpSocket = new QUdpSocket(parent);
 		udpSocket->bind(QHostAddress::LocalHost, 7755);
 
-		parent->connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
+		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 
 	}
 }
 void ChatServer::read(){
 	while (udpSocket->hasPendingDatagrams()){
+		qDebug() << "yes";
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
-		sender;
-		senderPort;
+		//sender;
+		//senderPort;
 		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
 		emit rec(datagram);//
 	}
