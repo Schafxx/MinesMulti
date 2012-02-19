@@ -16,30 +16,30 @@
 ChatServer::ChatServer(QObject *parent, bool a) {
 	b = a;
 	if (a){
-		QHostAddress *addr = new QHostAddress("0.0.0.0");
 		udpSocket = new QUdpSocket(parent);
-		udpSocket->bind(*addr, 7755);
+		udpSocket->bind(QHostAddress("0.0.0.0"), 7755);
 
 		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 
 	}
 }
 void ChatServer::read(){
-	qDebug() << "test";
+	qDebug() << "read";
 	while (udpSocket->hasPendingDatagrams()){
-		qDebug() << "yes";
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
 		//sender;
 		//senderPort;
 		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+		qDebug() << datagram;
 		emit rec(datagram);//
+
 	}
 	
 }
 
 void ChatServer::write(QByteArray *msg){
-	qDebug() << sender;
+	qDebug() << "write";
 	QHostAddress *addr = new QHostAddress("192.168.2.102");
 	udpSocket->writeDatagram(*msg, *addr, 7755);
 }

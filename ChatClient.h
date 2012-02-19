@@ -19,6 +19,7 @@ public:
 	virtual ~ChatClient();
 	void write(QByteArray *msg);
 	bool b;
+	QHostAddress sender;
 public slots:
 	void read();
 private:
