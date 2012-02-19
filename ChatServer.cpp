@@ -12,17 +12,20 @@
 #include <QByteArray>
 #include <QHostAddress>
 #include <QDebug>
+
 ChatServer::ChatServer(QObject *parent, bool a) {
 	b = a;
 	if (a){
+		QHostAddress *addr = new QHostAddress("127.0.0.1");
 		udpSocket = new QUdpSocket(parent);
-		udpSocket->bind(QHostAddress::LocalHost, 7755);
+		udpSocket->bind(*addr, 7755);
 
 		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 
 	}
 }
 void ChatServer::read(){
+	qDebug() << "test";
 	while (udpSocket->hasPendingDatagrams()){
 		qDebug() << "yes";
 		QByteArray datagram;
@@ -36,7 +39,9 @@ void ChatServer::read(){
 }
 
 void ChatServer::write(QByteArray *msg){
-	udpSocket->writeDatagram(*msg, sender, senderPort);
+	qDebug() << sender;
+	QHostAddress *addr = new QHostAddress("192.168.2.102");
+	udpSocket->writeDatagram(msg->data(), *addr, 7755);
 }
 
 ChatServer::~ChatServer() {

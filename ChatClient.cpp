@@ -26,6 +26,7 @@ ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
 }
 
 void ChatClient::read(){
+	qDebug() << "test";
      while (udpSocket->hasPendingDatagrams()) {
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
@@ -41,7 +42,7 @@ void ChatClient::read(){
 
 void ChatClient::write(QByteArray *msg){
 
-	udpSocket->writeDatagram(*msg, *host, 5577);
+	udpSocket->writeDatagram(msg->data(), *host, 5577);
 }
 
 ChatClient::~ChatClient() {
