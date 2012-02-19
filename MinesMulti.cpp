@@ -82,7 +82,7 @@ void MinesMulti::Client(){
 }
 
 void MinesMulti::Senden(){
-	const char *text = te2->toPlainText().toLatin1();
+	const char *text = te->toPlainText().toLatin1();
 	QBA = new QByteArray(text);
 
 	if (cs->b){
