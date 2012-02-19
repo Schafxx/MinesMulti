@@ -31,12 +31,12 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
 
     te2 = new QTextEdit(this);
     te2->setVisible(false);
-    te2->move(this->width()/2-150,this->height()/2);
+    te2->move(this->width()/2-150,this->height()/2+200);
     te2->setFixedWidth(150);
 
     bt4 = new QPushButton("Verbinden",this);
     bt4->setVisible(false);
-    bt4->move(this->width()/2+5,this->height()/2);
+    bt4->move(this->width()/2+5,this->height()/2+200);
 
     for(int a = 0; a < 10; a++){
     	for(int b = 0; b < 10; b++){
@@ -61,9 +61,12 @@ void MinesMulti::Server(){
 	tb->setVisible(true);
 	te->setVisible(true);
 	bt3->setVisible(true);
-	cs = new ChatServer(this,true);
-	cc = new ChatClient(this, te2->toPlainText(), false);
-	connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
+	te2->setVisible(true);
+	bt4->setVisible(true);
+	//cs = new ChatServer(this,true);
+	ServerClient = true;
+	//cc = new ChatClient(this, te2->toPlainText(), false);
+	//connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
 	FeldSichtbar();
 }
 void MinesMulti::Client(){
@@ -74,7 +77,8 @@ void MinesMulti::Client(){
 	bt3->setVisible(true);
 	te2->setVisible(true);
 	bt4->setVisible(true);
-	cs = new ChatServer(this,false);
+	ServerClient = false;
+	//cs = new ChatServer(this,false);
 }
 
 void MinesMulti::Senden(){
@@ -91,11 +95,17 @@ void MinesMulti::Senden(){
 }
 
 void MinesMulti::Verbinden(){
-	cc = new ChatClient(this, te2->toPlainText(), true);
 	te2->setVisible(false);
 	bt4->setVisible(false);
-	connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
-
+	if (!ServerClient){
+		cc = new ChatClient(this, te2->toPlainText(), true);
+		cs = new ChatServer(this, te2->toPlainText(), false);
+		connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
+	}else{
+		cc = new ChatClient(this, te2->toPlainText(), false);
+		cs = new ChatServer(this, te2->toPlainText(), true);
+		connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
+	}
 }
 
 void MinesMulti::read(QByteArray D){

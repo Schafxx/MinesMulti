@@ -13,10 +13,11 @@
 #include <QHostAddress>
 #include <QDebug>
 
-ChatServer::ChatServer(QObject *parent, bool a) {
+ChatServer::ChatServer(QObject *parent, QString ip, bool a) {
 	b = a;
 	if (a){
 		udpSocket = new QUdpSocket(parent);
+		addr = new QHostAddress(ip);
 		udpSocket->bind(QHostAddress("0.0.0.0"), 7755);
 		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 
@@ -38,9 +39,9 @@ void ChatServer::read(){
 
 void ChatServer::write(QByteArray *msg){
 	qDebug() << "write";
-	QHostAddress *addr = new QHostAddress("192.168.2.102");
+	//QHostAddress *addr = new QHostAddress("192.168.2.102");
 	qDebug() << sender;
-	udpSocket->writeDatagram(*msg, sender, 7755);
+	udpSocket->writeDatagram(*msg, *addr, 7755);
 }
 
 ChatServer::~ChatServer() {

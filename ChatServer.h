@@ -16,11 +16,12 @@
 class ChatServer : public QObject {
 	Q_OBJECT
 public:
-	ChatServer(QObject *parent = 0, bool a = false);
+	ChatServer(QObject *parent = 0,QString ip = "", bool a = false);
 	virtual ~ChatServer();
 	bool b;
 	quint16 senderPort;
 	QHostAddress sender;
+	QHostAddress *addr;
 
 public slots:
 	void read();
