@@ -97,16 +97,14 @@ void MinesMulti::Verbinden(){
 	cc = new ChatClient(this, te2->toPlainText(), true);
 	te2->setVisible(false);
 	bt4->setVisible(false);
-	connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(readC(QByteArray)));
+	connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
 
 }
 
 void MinesMulti::read(QByteArray D){
 	tb->append(D);
 }
-void MinesMulti::readC(QByteArray D){
-	tb->append(D);
-}
+
 
 void MinesMulti::FeldSichtbar(){
 	for(int a = 0; a < 10; a++){

@@ -30,12 +30,11 @@ void ChatClient::read(){
     while (udpSocket->hasPendingDatagrams()) {
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
-         qDebug() << sender;
          quint16 senderPort;
-         udpSocket->readDatagram(datagram.data(), datagram.size(),
+         udpSocket->readDatagram(datagram, datagram.size(),
                                  &sender, &senderPort);
 
-         emit rec(datagram.data());
+         emit rec(datagram);
     }
 
 }
