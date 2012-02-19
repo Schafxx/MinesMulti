@@ -18,7 +18,7 @@ ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
 	if (a){
 		udpSocket = new QUdpSocket(parent);;
 		host = new QHostAddress(ip);
-		udpSocket->bind(*host, 7755);
+		udpSocket->bind(QHostAddress("0.0.0.0"), 7755);
 		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
 		udpSocket->writeDatagram("",*host,5577);
 	}
