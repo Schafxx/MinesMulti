@@ -31,8 +31,8 @@ void ChatServer::read(){
 		//sender;
 		//senderPort;
 		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-		qDebug() << datagram;
-		emit rec(datagram);//
+		qDebug() << datagram.data();
+		emit rec(datagram.data());//
 
 	}
 	
