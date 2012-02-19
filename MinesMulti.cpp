@@ -18,16 +18,16 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     tb = new QTextBrowser(this);
     tb->setVisible(false);
     tb->move(this->width()-300,0);
-    tb->setFixedSize(300,800);
+    tb->setFixedSize(300,400);
 
     te = new QTextEdit(this);
     te->setVisible(false);
-    te->move(this->width()-300,810);
+    te->move(this->width()-300,410);
     te->setFixedSize(300,100);
 
     bt3 = new QPushButton("Senden",this);
     bt3->setVisible(false);
-    bt3->move(this->width()-200,920);
+    bt3->move(this->width()-200,520);
 
     te2 = new QTextEdit(this);
     te2->setVisible(false);
