@@ -42,7 +42,7 @@ void ChatClient::read(){
 
 void ChatClient::write(QByteArray *msg){
 	qDebug() << "Client Write";
-	udpSocket->writeDatagram(*msg, *host, 5577);
+	udpSocket->writeDatagram(*msg, *host, 7755);
 }
 
 ChatClient::~ChatClient() {
