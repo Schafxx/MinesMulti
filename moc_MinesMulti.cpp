@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MinesMulti.h'
 **
-** Created: Sun Feb 19 14:03:16 2012
+** Created: Sun Feb 19 14:33:34 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MinesMulti[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -37,7 +37,6 @@ static const uint qt_meta_data_MinesMulti[] = {
       39,   11,   11,   11, 0x08,
       54,   11,   11,   11, 0x08,
       68,   66,   11,   11, 0x08,
-      85,   66,   11,   11, 0x08,
 
        0        // eod
 };
@@ -45,7 +44,7 @@ static const uint qt_meta_data_MinesMulti[] = {
 static const char qt_meta_stringdata_MinesMulti[] = {
     "MinesMulti\0\0Server()\0Client()\0Senden()\0"
     "FeldSichtbar()\0Verbinden()\0D\0"
-    "read(QByteArray)\0readC(QByteArray)\0"
+    "read(QByteArray)\0"
 };
 
 const QMetaObject MinesMulti::staticMetaObject = {
@@ -85,10 +84,9 @@ int MinesMulti::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 3: FeldSichtbar(); break;
         case 4: Verbinden(); break;
         case 5: read((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
-        case 6: readC((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 7;
+        _id -= 6;
     }
     return _id;
 }

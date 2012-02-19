@@ -78,12 +78,9 @@ void MinesMulti::Client(){
 }
 
 void MinesMulti::Senden(){
-	try{
-		const char *text = te2->toPlainText().toLatin1();
-		QBA = new QByteArray(text);
-	}catch(...){
+	const char *text = te2->toPlainText().toLatin1();
+	QBA = new QByteArray(text);
 
-	}
 	if (cs->b){
 		cs->write(QBA);
 	}
