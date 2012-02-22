@@ -39,5 +39,6 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		ChatClient *cc;
 		QTextDocument *doc;
 		bool ServerClient;
+		int Minen;
 };
 #endif //MINEN_H
