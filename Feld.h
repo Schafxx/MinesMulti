@@ -17,9 +17,12 @@ class Feld : public QPushButton {
 public:
 	Feld(QWidget *parent);
 	virtual ~Feld();
-
+	bool aktiv;
+	bool Mine;
+	
 public slots:
 	void klick();
+	void deaktivieren();
 };
 
 #endif /* FELD_H_ */
