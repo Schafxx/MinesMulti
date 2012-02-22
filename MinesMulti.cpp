@@ -68,6 +68,11 @@ void MinesMulti::Server(){
 	//cc = new ChatClient(this, te2->toPlainText(), false);
 	//connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
 	FeldSichtbar();
+	for (int a = 0; a < 10; a++){
+		for (int b = 0; b < 10; b++){
+			connect(Minen[a][b],SIGNAL(clicked()),this,SLOT(MineLegen()));
+		}
+	}
 }
 void MinesMulti::Client(){
 	bt->setVisible(false);
@@ -123,6 +128,18 @@ void MinesMulti::FeldSichtbar(){
 
 void MinesMulti::nachricht(QByteArray msg){
 	tb->append(QString(msg));
+}
+
+void MinesMulti::MineLegen(){
+	if (Minen < 0){
+		Minen--;
+	}else{
+		for (int a = 0; a < 10; a++){
+			for (int b = 0; b < 10; b++){
+				Minen[a][b]->deaktivieren();
+			}
+		}
+	}
 }
 
 MinesMulti::~MinesMulti(){
