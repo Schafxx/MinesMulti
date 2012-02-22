@@ -77,7 +77,7 @@ void MinesMulti::Server(){
 void MinesMulti::Client(){
 	bt->setVisible(false);
 	bt2->setVisible(false);
-	tb->setVisible(true);
+	tb->setVisible(true)
 	te->setVisible(true);
 	bt3->setVisible(true);
 	te2->setVisible(true);
@@ -131,14 +131,23 @@ void MinesMulti::nachricht(QByteArray msg){
 }
 
 void MinesMulti::MineLegen(){
-	if (Minen < 0){
-		Minen--;
+	if (Mines > 0){
+		Mines--;
 	}else{
+		QByteArray Q = new QByteArray();
 		for (int a = 0; a < 10; a++){
 			for (int b = 0; b < 10; b++){
 				Minen[a][b]->deaktivieren();
+				if(Minen[a][b]->aktiv){
+					Q.append("b");
+				}else{
+					Q.append("n");
+				}
 			}
 		}
+		//Q an GameClient senden
+		
+		
 	}
 }
 
