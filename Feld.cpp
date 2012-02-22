@@ -16,8 +16,15 @@ Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 
 }
 void Feld::klick(){
+	aktiv = false;
+	Mine = true;
 
 }
+
+void Feld::deaktivieren(){
+	aktiv = false;
+}
+
 Feld::~Feld() {
 	// TODO Auto-generated destructor stub
 
