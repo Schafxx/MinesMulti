@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Feld.h'
 **
-** Created: Sat Feb 18 19:42:03 2012
+** Created: Sun Feb 26 16:08:42 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_Feld[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,13 @@ static const uint qt_meta_data_Feld[] = {
 
  // slots: signature, parameters, type, tag, flags
        6,    5,    5,    5, 0x0a,
+      14,    5,    5,    5, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Feld[] = {
-    "Feld\0\0klick()\0"
+    "Feld\0\0klick()\0deaktivieren()\0"
 };
 
 const QMetaObject Feld::staticMetaObject = {
@@ -70,9 +71,10 @@ int Feld::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: klick(); break;
+        case 1: deaktivieren(); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

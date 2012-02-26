@@ -16,13 +16,13 @@ Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 
 }
 void Feld::klick(){
-	aktiv = false;
 	Mine = true;
-
+	this->setText("M");
+	this->setEnabled(false);
 }
 
 void Feld::deaktivieren(){
-	aktiv = false;
+	this->setEnabled(false);
 }
 
 Feld::~Feld() {
