@@ -6,7 +6,7 @@
 #include <QTextBrowser>
 #include <QTextEdit>
 #include <QTextDocument>
-
+#include <QLabel>
 
 MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     setupUi(this);
@@ -71,6 +71,7 @@ void MinesMulti::Server(){
 	for (int a = 0; a < 10; a++){
 		for (int b = 0; b < 10; b++){
 			connect(Minen[a][b],SIGNAL(clicked()),this,SLOT(MineLegen()));
+			Minen[a][b]->legen = true;
 		}
 	}
 	Mines = 12;
@@ -151,6 +152,76 @@ void MinesMulti::MineLegen(){
 		
 		
 	}
+}
+
+void MinesMulti::Mienerhalten(QByteArray m){
+	QString m2 = QString(m);
+	int c = 0;
+	for(int a = 0; a < 10; a++){
+		for(int b = 0; b < 10; b++){
+			if(m2[c] == QChar(98)){
+				Minen[a][b]->Mine = true;
+				connect(Minen[a][b], SIGNAL(Explosion()), this, SLOT(LOSE()));
+			}else{
+				try{
+					if(m2.at(c+1) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c+11) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c+10) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c+9) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c-1) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c-11) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c-10) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}try{
+					if(m2.at(c-9) == QChar(98)){
+						Minen[a][b]->Anzahl++;
+					}
+				}catch(...){
+
+				}
+
+			}
+			c++;
+		}
+	}
+
+}
+
+void MinesMulti::LOSE(){
+
 }
 
 MinesMulti::~MinesMulti(){

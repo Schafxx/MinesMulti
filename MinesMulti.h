@@ -26,6 +26,8 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void Verbinden();
 		void read(QByteArray D);
 		void MineLegen();
+		void Mienerhalten(QByteArray m);
+		void LOSE();
 		//void readC(QByteArray D);
 
 	public:

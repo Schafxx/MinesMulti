@@ -13,6 +13,7 @@
 #include <QHostAddress>
 #include <QDebug>
 
+
 ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
 	b = a;
 	if (a){
