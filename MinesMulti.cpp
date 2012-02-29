@@ -107,10 +107,15 @@ void MinesMulti::Verbinden(){
 	if (!ServerClient){
 		cc = new ChatClient(this, te2->toPlainText(), true);
 		cs = new ChatServer(this, te2->toPlainText(), false);
+		gc = new GameClient(this, te2->toPlainText(), true);
+		gs = new GameServer(this, te2->toPlainText(), false);
 		connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
+		connect(gc, SIGNAL(rec(QByteArray)), this, SLOT(Minenerhalten(QByteArray)));
 	}else{
 		cc = new ChatClient(this, te2->toPlainText(), false);
 		cs = new ChatServer(this, te2->toPlainText(), true);
+		gc = new GameClient(this, te2->toPlainText(), false);
+		gs = new GameServer(this, te2->toPlainText(), true);
 		connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
 	}
 }
@@ -148,6 +153,7 @@ void MinesMulti::MineLegen(){
 				Minen[a][b]->deaktivieren();
 			}
 		}
+		gs->write(Q);
 		//Q an GameClient senden
 		
 		

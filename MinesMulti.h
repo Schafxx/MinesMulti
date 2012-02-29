@@ -39,6 +39,8 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		Feld *Minen[10][10];
 		ChatServer *cs;
 		ChatClient *cc;
+		GameServer *gs;
+		GameClient *gc;
 		QTextDocument *doc;
 		bool ServerClient;
 		int Mines;
