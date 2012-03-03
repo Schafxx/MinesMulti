@@ -8,6 +8,25 @@
 #include <QTextDocument>
 #include <QLabel>
 
+
+#include "osrng.h"
+using CryptoPP::AutoSeededRandomPool;
+#include "cryptlib.h"
+#include "modes.h"
+using CryptoPP::CFB_Mode;
+#include "aes.h"
+using CryptoPP::AES;
+
+#include "filters.h"
+using CryptoPP::StringSink;
+using CryptoPP::StringSource;
+using CryptoPP::StreamTransformationFilter;
+
+
+#include <string>
+using std::string;
+
+
 MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     setupUi(this);
     bt = new QPushButton("Minenleger",this);
@@ -53,6 +72,7 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     connect(bt2, SIGNAL(clicked()), this, SLOT(Client()));
     connect(bt3, SIGNAL(clicked()),this,SLOT(Senden()));
     connect(bt4, SIGNAL(clicked()),this,SLOT(Verbinden()));
+    crypto = false;
 }
 
 void MinesMulti::Server(){
@@ -90,8 +110,27 @@ void MinesMulti::Client(){
 
 void MinesMulti::Senden(){
 	const char *text = te->toPlainText().toLatin1();
-	QBA = new QByteArray(text);
+	if (crypto){
+		char *textcrypto = const_cast<char*>(text);
+		AutoSeededRandomPool rnd;
+		byte iv[AES::BLOCKSIZE];
+		rnd.GenerateBlock(iv, AES::BLOCKSIZE);
+		int messageLen = (int)strlen(textcrypto) + 1;
 
+		char *key = "1234567812345678";
+		CFB_Mode<AES>::Encryption cfbEncryption((byte*)key, 16, iv);
+		cfbEncryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen);
+
+		CFB_Mode<AES>::Decryption cfbDecryption((byte*)key, 16, iv);
+		cfbDecryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen);
+
+
+
+		QBA = new QByteArray(textcrypto);
+
+	}else{
+		QBA = new QByteArray(text);
+	}
 	if (cs->b){
 		cs->write(QBA);
 	}
@@ -121,7 +160,11 @@ void MinesMulti::Verbinden(){
 }
 
 void MinesMulti::read(QByteArray D){
-	tb->append(D);
+	if(crypto){
+		//TODO
+	}else{
+		tb->append(D);
+	}
 }
 
 
@@ -154,7 +197,6 @@ void MinesMulti::MineLegen(){
 			}
 		}
 		gs->write(Q);
-		//Q an GameClient senden
 		
 		
 	}

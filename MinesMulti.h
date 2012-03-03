@@ -12,6 +12,8 @@
 #include <QTextEdit>
 #include <QTextDocument>
 
+
+
 class MinesMulti : public QMainWindow, public Ui::MainWindow{
 	Q_OBJECT
 
@@ -44,5 +46,6 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		QTextDocument *doc;
 		bool ServerClient;
 		int Mines;
+		bool crypto;
 };
 #endif //MINEN_H

@@ -274,7 +274,7 @@ MinesMulti.o: MinesMulti.cpp MinesMulti.h \
 		GameServer.h \
 		GameClient.h \
 		Feld.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Wno-unused -o MinesMulti.o MinesMulti.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Wunused -o MinesMulti.o MinesMulti.cpp
 
 moc_ChatClient.o: moc_ChatClient.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ChatClient.o moc_ChatClient.cpp
