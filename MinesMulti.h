@@ -11,6 +11,8 @@
 #include <QTextBrowser>
 #include <QTextEdit>
 #include <QTextDocument>
+#include <QLabel>
+#include <QLineEdit>
 
 
 
@@ -28,16 +30,20 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void Verbinden();
 		void read(QByteArray D);
 		void MineLegen();
-		void Mienerhalten(QByteArray m);
+                void Minerhalten(QByteArray m);
 		void LOSE();
+                void WIN();
+                void crypt();
 		//void readC(QByteArray D);
 
 	public:
 		void nachricht(QByteArray msg);
 		QByteArray *QBA;
-		QPushButton *bt, *bt2, *bt3, *bt4;
+                QPushButton *bt, *bt2, *bt3, *bt4, *bt5;
+                QLabel *lab;
 		QTextBrowser *tb;
-		QTextEdit *te, *te2;
+                QTextEdit *te, *te2;
+                QLineEdit *le;
 		Feld *Minen[10][10];
 		ChatServer *cs;
 		ChatClient *cc;
@@ -47,5 +53,6 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		bool ServerClient;
 		int Mines;
 		bool crypto;
+                char *key;
 };
 #endif //MINEN_H
