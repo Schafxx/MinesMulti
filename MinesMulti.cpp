@@ -55,12 +55,12 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
 
     te2 = new QTextEdit(this);
     te2->setVisible(false);
-    te2->move(this->width()/2-150,this->height()/2+200);
+    te2->move(this->width()/2-150,this->height()/2);//+200
     te2->setFixedWidth(150);
 
     bt4 = new QPushButton("Verbinden",this);
     bt4->setVisible(false);
-    bt4->move(this->width()/2+5,this->height()/2+200);
+    bt4->move(this->width()/2+5,this->height()/2);//+200
 
     for(int a = 0; a < 10; a++){
     	for(int b = 0; b < 10; b++){
