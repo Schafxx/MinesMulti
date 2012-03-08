@@ -225,6 +225,7 @@ void MinesMulti::MineLegen(){
 }
 
 void MinesMulti::Minerhalten(QByteArray m){
+    qDebug() << m;
     int test;
     if(m == QByteArray("WIN")){
         test = 1;
