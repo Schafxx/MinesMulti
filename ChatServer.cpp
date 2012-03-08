@@ -24,7 +24,7 @@ ChatServer::ChatServer(QObject *parent, QString ip, bool a) {
 	}
 }
 void ChatServer::read(){
-	qDebug() << "read";
+
 	while (udpSocket->hasPendingDatagrams()){
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
@@ -38,7 +38,7 @@ void ChatServer::read(){
 }
 
 void ChatServer::write(QByteArray *msg){
-	qDebug() << "write";
+
 	//QHostAddress *addr = new QHostAddress("192.168.2.102");
 	qDebug() << sender;
 	udpSocket->writeDatagram(*msg, *addr, 7755);
