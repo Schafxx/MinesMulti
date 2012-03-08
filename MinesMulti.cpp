@@ -226,9 +226,10 @@ void MinesMulti::MineLegen(){
 
 void MinesMulti::Minerhalten(QByteArray m){
     qDebug() << m;
-    int test;
+    int test = 0;
     if(m == QByteArray("WIN")){
         test = 1;
+
     }
     if(m == QByteArray("LOSE")){
         test = 2;
@@ -248,6 +249,7 @@ void MinesMulti::Minerhalten(QByteArray m){
         lab->setText(QString::number(Mines));
 	QString m2 = QString(m);
 	int c = 0;
+
 	for(int a = 0; a < 10; a++){
 		for(int b = 0; b < 10; b++){
 			if(m2[c] == QChar(98)){

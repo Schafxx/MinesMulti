@@ -34,7 +34,7 @@ void GameServer::read(){
 }
 
 void GameServer::write(QByteArray *msg){
-	qDebug() << "write";
+    qDebug() << "write" << addr;
 	//QHostAddress *addr = new QHostAddress("192.168.2.102");
 	//qDebug() << sender;
 	udpSocket->writeDatagram(*msg, *addr, 7756);
