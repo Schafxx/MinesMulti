@@ -166,6 +166,7 @@ void MinesMulti::Verbinden(){
 		gc = new GameClient(this, te2->toPlainText(), false);
 		gs = new GameServer(this, te2->toPlainText(), true);
 		connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
+                connect(gs,SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray)));
 	}
 }
 
@@ -224,7 +225,26 @@ void MinesMulti::MineLegen(){
 }
 
 void MinesMulti::Minerhalten(QByteArray m){
+    int test;
+    if(m == QByteArray("WIN")){
+        test = 1;
+    }
+    if(m == QByteArray("LOSE")){
+        test = 2;
+    }
+
+
+    switch(test){
+    case 1:
+        this->WIN();
+        break;
+    case 2:
+        this->LOSE();
+        break;
+    default:
         FeldSichtbar();
+        Mines = (11*11)-12;
+        lab->setText(QString::number(Mines));
 	QString m2 = QString(m);
 	int c = 0;
 	for(int a = 0; a < 10; a++){
@@ -282,20 +302,28 @@ void MinesMulti::Minerhalten(QByteArray m){
 				}catch(...){
 
 				}
+                            connect(Minen[a][b],SIGNAL(notExplosion()),this,SLOT(finden()));
 
 			}
 			c++;
 		}
 	}
+        break;
+    }
+}
+
+void MinesMulti::finden(){
+    Mines--;
+    lab->setText(QString::number(Mines));
 
 }
 
 void MinesMulti::LOSE(){
-
+    lab->setText("You have lost the game!");
 }
 
 void MinesMulti::WIN(){
-
+    lab->setText("You have won the game!");
 }
 
 void MinesMulti::crypt(){

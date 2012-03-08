@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Feld.h'
 **
-** Created: Sun Feb 26 16:42:27 2012
+** Created: Thu Mar 8 16:53:50 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,17 +32,17 @@ static const uint qt_meta_data_Feld[] = {
 
  // signals: signature, parameters, type, tag, flags
        6,    5,    5,    5, 0x05,
-      25,   18,    5,    5, 0x05,
+      18,    5,    5,    5, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      43,    5,    5,    5, 0x0a,
-      51,    5,    5,    5, 0x0a,
+      33,    5,    5,    5, 0x0a,
+      41,    5,    5,    5, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Feld[] = {
-    "Feld\0\0Explosion()\0Anzahl\0notExplosion(int)\0"
+    "Feld\0\0Explosion()\0notExplosion()\0"
     "klick()\0deaktivieren()\0"
 };
 
@@ -76,7 +76,7 @@ int Feld::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: Explosion(); break;
-        case 1: notExplosion((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: notExplosion(); break;
         case 2: klick(); break;
         case 3: deaktivieren(); break;
         default: ;
@@ -93,9 +93,8 @@ void Feld::Explosion()
 }
 
 // SIGNAL 1
-void Feld::notExplosion(int _t1)
+void Feld::notExplosion()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

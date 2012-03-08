@@ -23,7 +23,7 @@ public:
 	
 signals:
 	void Explosion();
-	void notExplosion(int Anzahl);
+        void notExplosion();
 public slots:
 	void klick();
 	void deaktivieren();

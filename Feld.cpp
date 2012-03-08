@@ -12,6 +12,7 @@
 #include <QObject>
 Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 	legen = false;
+        Anzahl = 0;
 	// TODO Auto-generated constructor stub
 
 }
@@ -24,8 +25,8 @@ void Feld::klick(){
 		if(Mine){
 			emit Explosion();
 		}else{
-			this->setText(QString(Anzahl));
-			//emit notExplosion(Anzahl);
+                        this->setText(QString::number(Anzahl));
+                        emit notExplosion();
 		}
 		this ->setEnabled(false);
 	}

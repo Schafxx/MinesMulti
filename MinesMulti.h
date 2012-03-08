@@ -34,6 +34,7 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void LOSE();
                 void WIN();
                 void crypt();
+                void finden();
 		//void readC(QByteArray D);
 
 	public:
