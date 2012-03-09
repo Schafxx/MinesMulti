@@ -28,70 +28,70 @@ using std::string;
 
 
 MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
-    setupUi(this);
+    setupUi(this); //Erstellen des GUIs
 
-    lab = new QLabel(this);
+    lab = new QLabel(this); //enthällt Nachricht über Ausstehende Minen/Felder ohne Mienen entdeckt und Sieg/Niederlage
     lab->move(10,10);
     lab->setVisible(true);
 
-    bt = new QPushButton("Minenleger",this);
+    bt = new QPushButton("Minenleger",this); //Auswahl des Spielermodus
     bt2 = new QPushButton("Minensucher",this);
     bt->move(this->width()/2 - bt->width(), 10);
     bt2->move(this->width()/2, 10);
 
-    tb = new QTextBrowser(this);
+    tb = new QTextBrowser(this); //Chat-Ausgabe
     tb->setVisible(false);
     tb->move(this->width()-400,0);
     tb->setFixedSize(300,400);
 
-    te = new QTextEdit(this);
+    te = new QTextEdit(this); //Chat-Eingabe
     te->setVisible(false);
     te->move(this->width()-400,410);
     te->setFixedSize(300,100);
 
-    bt3 = new QPushButton("Senden",this);
+    bt3 = new QPushButton("Senden",this); //Nachricht verschicken
     bt3->setVisible(false);
     bt3->move(this->width()-300,520);
 
-    te2 = new QTextEdit(this);
+    te2 = new QTextEdit(this); //Eingabefeld für die IP-Adresse
     te2->setVisible(false);
     te2->move(this->width()/2-150,this->height()/3);//+200
     te2->setFixedWidth(150);
 
-    bt4 = new QPushButton("Verbinden",this);
+    bt4 = new QPushButton("Verbinden",this); //Verbinden mit Rechner mit eingetragener IP-Adresse
     bt4->setVisible(false);
     bt4->move(this->width()/2+5,this->height()/3);//+200
 
-    for(int a = 0; a < 10; a++){
+    for(int a = 0; a < 10; a++){ //Erstellen des Minenfelds(Prototyp ohne Minen)
     	for(int b = 0; b < 10; b++){
-    		Minen[a][b] = new Feld(this);
+    		Minen[a][b] = new Feld(this); 
     		Minen[a][b]->setFixedSize(50,50);
     		Minen[a][b]->move(a*50+50,b*50+50);
     		Minen[a][b]->setVisible(false);
-    		connect(Minen[a][b], SIGNAL(clicked()), Minen[a][b], SLOT(klick()));
+    		connect(Minen[a][b], SIGNAL(clicked()), Minen[a][b], SLOT(klick())); // verbinden des clicked Signals und dem Slot klick des Feldes
     	}
 
     }
 
-    connect(bt, SIGNAL(clicked()), this, SLOT(Server()));
+    connect(bt, SIGNAL(clicked()), this, SLOT(Server()));//Verbinden der Buttons mit den dazugehörigen Methoden(Slots)
     connect(bt2, SIGNAL(clicked()), this, SLOT(Client()));
     connect(bt3, SIGNAL(clicked()),this,SLOT(Senden()));
     connect(bt4, SIGNAL(clicked()),this,SLOT(Verbinden()));
-    crypto = false;
+    crypto = false; //Standartwert für verschlüsselten Chat (true=verschlüsselt)
 
-    bt5 = new QPushButton("Crypto", this);
+    bt5 = new QPushButton("Crypto", this); //Anwenden des eingegebenen Passworts für Verschlüsselung des Textes
     bt5->move(this->width()/2+5,this->height()/2+230);
     bt5->setVisible(true);
     connect(bt5,SIGNAL(clicked()), this, SLOT(crypt()));
 
-    le = new QLineEdit(this);
+    le = new QLineEdit(this); //Eingabefeld für das Passwort
     le->move(this->width()/2-150,this->height()/2+230);
     le->setFixedWidth(150);
     le->setEchoMode(QLineEdit::Password);
 }
 
 void MinesMulti::Server(){
-	bt->setVisible(false);
+	bt->setVisible(false); //Auswahl der sichtbaren Module in dem Spielmodus
 	bt2->setVisible(false);
 	tb->setVisible(true);
 	te->setVisible(true);
@@ -99,19 +99,20 @@ void MinesMulti::Server(){
 	te2->setVisible(true);
 	bt4->setVisible(true);
 	//cs = new ChatServer(this,true);
-	ServerClient = true;
+	ServerClient = true; //ServerClient =true bedeutet Server false bedeutet Client
 	//cc = new ChatClient(this, te2->toPlainText(), false);
 	//connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
 	FeldSichtbar();
-	for (int a = 0; a < 10; a++){
+	for (int a = 0; a < 10; a++){ //Verbinden des Klicks und der Methode MineLegen
 		for (int b = 0; b < 10; b++){
 			connect(Minen[a][b],SIGNAL(clicked()),this,SLOT(MineLegen()));
 			Minen[a][b]->legen = true;
 		}
 	}
-	Mines = 12;
+	Mines = 12; //12 Minen sind legbar
 }
 void MinesMulti::Client(){
+	//Gestaltung des GUIS für den Minensucher
 	bt->setVisible(false);
 	bt2->setVisible(false);
 	tb->setVisible(true);
@@ -124,9 +125,9 @@ void MinesMulti::Client(){
 }
 
 void MinesMulti::Senden(){
-	const char *text = te->toPlainText().toLatin1();
+	const char *text = te->toPlainText().toLatin1(); //Konvertieren des zu sendenden textes für die Verschlüsselung
 	if (crypto){
-		char *textcrypto = const_cast<char*>(text);
+		char *textcrypto = const_cast<char*>(text); //deaktivieren der Konstanten-Eigenschaft
 		AutoSeededRandomPool rnd;
 		byte iv[AES::BLOCKSIZE];
 		rnd.GenerateBlock(iv, AES::BLOCKSIZE);
@@ -134,7 +135,7 @@ void MinesMulti::Senden(){
 
                 //char *key = "1234567812345678";
 		CFB_Mode<AES>::Encryption cfbEncryption((byte*)key, 16, iv);
-		cfbEncryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen);
+		cfbEncryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen); //AES-verschlüsselung anwenden
 
 		QBA = new QByteArray(textcrypto);
 
@@ -142,10 +143,10 @@ void MinesMulti::Senden(){
 		QBA = new QByteArray(text);
 	}
 	if (cs->b){
-		cs->write(QBA);
+		cs->write(QBA); //Verschicken des versclüsselten/unverschlüsselten Textes als Server(Minenleger)
 	}
 	if (cc->b){
-		cc->write(QBA);
+		cc->write(QBA);//Verschicken des versclüsselten/unverschlüsselten Textes als Client(Minensucher)
 	}
 	te->clear();
 }
@@ -153,14 +154,14 @@ void MinesMulti::Senden(){
 void MinesMulti::Verbinden(){
 	te2->setVisible(false);
 	bt4->setVisible(false);
-	if (!ServerClient){
+	if (!ServerClient){ //Client erstellen
 		cc = new ChatClient(this, te2->toPlainText(), true);
 		cs = new ChatServer(this, te2->toPlainText(), false);
 		gc = new GameClient(this, te2->toPlainText(), true);
 		gs = new GameServer(this, te2->toPlainText(), false);
 		connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
                 connect(gc, SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray)));
-	}else{
+	}else{ //Server ertsellen
 		cc = new ChatClient(this, te2->toPlainText(), false);
 		cs = new ChatServer(this, te2->toPlainText(), true);
 		gc = new GameClient(this, te2->toPlainText(), false);
@@ -170,10 +171,10 @@ void MinesMulti::Verbinden(){
 	}
 }
 
-void MinesMulti::read(QByteArray D){
-    QString *t = new QString(D);
+void MinesMulti::read(QByteArray D){ //Erhalten einer Nachricht
+    QString *t = new QString(D); 
     const char* text = t->toLatin1();
-        if(crypto){
+        if(crypto){//Entschlüsseln der Nachricht
             char* textcrypto = const_cast<char*>(text);
             AutoSeededRandomPool rnd;
             byte iv[AES::BLOCKSIZE];
@@ -190,7 +191,7 @@ void MinesMulti::read(QByteArray D){
 }
 
 
-void MinesMulti::FeldSichtbar(){
+void MinesMulti::FeldSichtbar(){//Spielfeld sichtbar machen
 	for(int a = 0; a < 10; a++){
 		for(int b = 0; b < 10; b++){
 			Minen[a][b]->setVisible(true);
