@@ -14,13 +14,13 @@
 #include <QDebug>
 
 
-ChatClient::ChatClient(QObject *parent, QString ip, bool a) {
-	b = a;
+ChatClient::ChatClient(QObject *parent, QString ip, bool a) {//ip, IP-Adresse, mit der sich verbunden werden soll
+	b = a;						     //a gibt an ob es ausgeführt werden soll
 	if (a){
-		udpSocket = new QUdpSocket(parent);;
+		udpSocket = new QUdpSocket(parent);;       
 		host = new QHostAddress(ip);
-		udpSocket->bind(QHostAddress("0.0.0.0"), 7755);
-		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
+		udpSocket->bind(QHostAddress("0.0.0.0"), 7755); //Akzeptieren von Nachrichten von jeder beliebigen Adresse
+		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read())); //verbinden vom Eingehen neuer Nachrichten und der read-Metjode
 		//udpSocket->writeDatagram("",*host,7755);
 	}
 
@@ -32,17 +32,17 @@ void ChatClient::read(){
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
          quint16 senderPort;
-         udpSocket->readDatagram(datagram.data(), datagram.size(),
+         udpSocket->readDatagram(datagram.data(), datagram.size(), //Auslesen des Datagrams
                                  &sender, &senderPort);
 
-         emit rec(datagram);
+         emit rec(datagram); //Benachrichtigung über angekommende Nachricht
     }
 
 }
 
 void ChatClient::write(QByteArray *msg){
 
-	udpSocket->writeDatagram(*msg, *host, 7755);
+	udpSocket->writeDatagram(*msg, *host, 7755); //Verschicken eine rNachricht msg an host an Port 7755
 }
 
 ChatClient::~ChatClient() {
