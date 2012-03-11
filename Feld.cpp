@@ -21,6 +21,7 @@ void Feld::klick(){
 	}else{
 		if(Mine){
 			emit Explosion();
+                        this->setText("X");
 		}else{
                         this->setText(QString::number(Anzahl));
                         emit notExplosion(Anzahl, this->pos());
