@@ -338,45 +338,29 @@ void MinesMulti::finden(int c, QPoint p){
         a = (p.x()-50)/50;
         b = (p.y()-50)/50;
         qDebug() << a << b;
-        try{
+        if(a>0 && b >= 0){
             Minen[a-1][b]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a>=-1 && b >= 0){
             Minen[a+1][b]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a>0 && b > 0){
             Minen[a-1][b-1]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a >0 && b >= 0){
             Minen[a-1][b]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a > 0 && b >= -1){
             Minen[a-1][b+1]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a >= -1 && b > 0){
             Minen[a+1][b-1]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a>=-1 && b >=0){
             Minen[a+1][b]->klick();
-        }catch(...){
-
         }
-        try{
+        if(a >= -1 && b>=-1){
             Minen[a+1][b+1]->klick();
-        }catch(...){
-
         }
     }
 
