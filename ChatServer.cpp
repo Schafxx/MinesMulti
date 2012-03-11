@@ -22,7 +22,8 @@ void ChatServer::read(){
 	while (udpSocket->hasPendingDatagrams()){
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
-		udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);//Auslesen der Nachricht
+                quint16 senderPort;
+                udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);//Auslesen der Nachricht
 		emit rec(datagram);//Benachrichtigen über neue Nachricht
 
 	}

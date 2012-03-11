@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ChatClient.h'
 **
-** Created: Sun Feb 19 14:57:13 2012
+** Created: Sun Mar 11 19:06:11 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

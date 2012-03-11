@@ -1,9 +1,3 @@
-/*
- * ChatClient.h
- *
- *  Created on: 04.02.2012
- *      Author: julian
- */
 
 #ifndef CHATCLIENT_H_
 #define CHATCLIENT_H_
