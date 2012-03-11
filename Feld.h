@@ -1,9 +1,3 @@
-/*
- * Feld.h
- *
- *  Created on: 04.02.2012
- *      Author: julian
- */
 
 #ifndef FELD_H_
 #define FELD_H_
@@ -11,6 +5,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QObject>
+#include <QPoint>
 class Feld : public QPushButton {
 	Q_OBJECT
 
@@ -23,7 +18,7 @@ public:
 	
 signals:
 	void Explosion();
-        void notExplosion();
+        void notExplosion(int Anzahl, QPoint p);
 public slots:
 	void klick();
 	void deaktivieren();

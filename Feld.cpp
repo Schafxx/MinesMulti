@@ -1,19 +1,15 @@
-/*
- * Feld.cpp
- *
- *  Created on: 04.02.2012
- *      Author: julian
- */
+
 
 #include "Feld.h"
 #include <QPushButton>
 #include <QWidget>
 #include <QDebug>
 #include <QObject>
+
+
 Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 	legen = false;
         Anzahl = 0;
-	// TODO Auto-generated constructor stub
 
 }
 void Feld::klick(){
@@ -26,7 +22,7 @@ void Feld::klick(){
 			emit Explosion();
 		}else{
                         this->setText(QString::number(Anzahl));
-                        emit notExplosion();
+                        emit notExplosion(Anzahl, this->pos());
 		}
 		this ->setEnabled(false);
 	}

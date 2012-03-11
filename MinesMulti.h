@@ -13,6 +13,7 @@
 #include <QTextDocument>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPoint>
 
 
 
@@ -34,7 +35,7 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		void LOSE();
                 void WIN();
                 void crypt();
-                void finden();
+                void finden(int c, QPoint p);
 
 
 	public:

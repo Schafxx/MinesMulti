@@ -100,10 +100,7 @@ void MinesMulti::Server(){
 	bt3->setVisible(true);
 	te2->setVisible(true);
 	bt4->setVisible(true);
-	//cs = new ChatServer(this,true);
-	ServerClient = true; //ServerClient =true bedeutet Server false bedeutet Client
-	//cc = new ChatClient(this, te2->toPlainText(), false);
-	//connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
+        ServerClient = true; //ServerClient = true bedeutet Server; ServerClient = false bedeutet Client
 	FeldSichtbar();
 	for (int a = 0; a < 10; a++){ //Verbinden des Klicks und der Methode MineLegen
 		for (int b = 0; b < 10; b++){
@@ -111,7 +108,7 @@ void MinesMulti::Server(){
 			Minen[a][b]->legen = true;
 		}
 	}
-	Mines = 12; //12 Minen sind legbar
+        Mines = 13; //13 Minen sind legbar
 }
 void MinesMulti::Client(){
 	//Gestaltung des GUIS für den Minensucher
@@ -145,9 +142,12 @@ void MinesMulti::Senden(){
 		QBA = new QByteArray(text);
 	}
 	if (cs->b){
+
 		cs->write(QBA); //Verschicken des versclüsselten/unverschlüsselten Textes als Server(Minenleger)
+
 	}
 	if (cc->b){
+
 		cc->write(QBA);//Verschicken des versclüsselten/unverschlüsselten Textes als Client(Minensucher)
 	}
 	te->clear();
@@ -256,7 +256,7 @@ void MinesMulti::Minerhalten(QByteArray m){
         break;
     default: //Feldinformationen auf Spielfeld übertragen
         FeldSichtbar();
-        Mines = (11*11)-12;
+        Mines = (11*11)-13;
         lab->setText(QString::number(Mines)); //Anzeige verbleibender freier Felder
 	QString m2 = QString(m);
 	int c = 0;
@@ -316,7 +316,7 @@ void MinesMulti::Minerhalten(QByteArray m){
 				}catch(...){
 
 				}
-                            connect(Minen[a][b],SIGNAL(notExplosion()),this,SLOT(finden()));
+                            connect(Minen[a][b],SIGNAL(notExplosion(int, QPoint)),this,SLOT(finden(int, QPoint)));
 
 			}
 			c++;
@@ -326,11 +326,18 @@ void MinesMulti::Minerhalten(QByteArray m){
     }
 }
 
-void MinesMulti::finden(){ //verbleibende freie Felder werden runtergezählt
-    Mines--;
+void MinesMulti::finden(int c, QPoint p){
+    Mines--;//verbleibende freie Felder werden runtergezählt
     lab->setText(QString::number(Mines));
     if (Mines == 0){
         this->WIN();
+    }
+    int a = 0;
+    int b = 0;
+    if (c == 0){
+        a = (p.x()-50)/50;
+        b = (p.y()-50)/50;
+        Minen[a][b]->klick();
     }
 
 }

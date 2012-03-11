@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MinesMulti.h'
 **
-** Created: Sun Mar 11 17:41:07 2012
+** Created: Sun Mar 11 18:12:09 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -42,7 +42,7 @@ static const uint qt_meta_data_MinesMulti[] = {
      123,   11,   11,   11, 0x08,
      130,   11,   11,   11, 0x08,
      136,   11,   11,   11, 0x08,
-     144,   11,   11,   11, 0x08,
+     148,  144,   11,   11, 0x08,
 
        0        // eod
 };
@@ -52,7 +52,7 @@ static const char qt_meta_stringdata_MinesMulti[] = {
     "FeldSichtbar()\0Verbinden()\0D\0"
     "read(QByteArray)\0MineLegen()\0m\0"
     "Minerhalten(QByteArray)\0LOSE()\0WIN()\0"
-    "crypt()\0finden()\0"
+    "crypt()\0c,p\0finden(int,QPoint)\0"
 };
 
 const QMetaObject MinesMulti::staticMetaObject = {
@@ -97,7 +97,7 @@ int MinesMulti::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 8: LOSE(); break;
         case 9: WIN(); break;
         case 10: crypt(); break;
-        case 11: finden(); break;
+        case 11: finden((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QPoint(*)>(_a[2]))); break;
         default: ;
         }
         _id -= 12;
