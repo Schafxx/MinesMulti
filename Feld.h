@@ -15,6 +15,7 @@ public:
 	bool legen;
 	bool Mine;
 	int Anzahl;
+        bool aktiv;
 	
 signals:
 	void Explosion();

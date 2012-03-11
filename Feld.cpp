@@ -10,7 +10,8 @@
 Feld::Feld(QWidget *parent = 0) : QPushButton(parent){
 	legen = false;
         Anzahl = 0;
-
+        aktiv = true;
+        Mine = false;
 }
 void Feld::klick(){
     if (this->isEnabled()){
@@ -19,6 +20,8 @@ void Feld::klick(){
 		this->setText("M");
 		this->setEnabled(false);
 	}else{
+            this ->setEnabled(false);
+            aktiv = false;
 		if(Mine){
 			emit Explosion();
                         this->setText("X");
@@ -26,16 +29,17 @@ void Feld::klick(){
                         this->setText(QString::number(Anzahl));
                         emit notExplosion(Anzahl, this->pos());
 		}
-		this ->setEnabled(false);
+
 	}
     }
 }
 
 void Feld::deaktivieren(){
 	this->setEnabled(false);
+        aktiv = false;
 }
 
 Feld::~Feld() {
-	// TODO Auto-generated destructor stub
+
 
 }

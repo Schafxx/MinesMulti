@@ -108,7 +108,7 @@ void MinesMulti::Server(){
 			Minen[a][b]->legen = true;
 		}
 	}
-        Mines = 13; //13 Minen sind legbar
+        Mines = 12; //13 Minen sind legbar
 }
 void MinesMulti::Client(){
 	//Gestaltung des GUIS für den Minensucher
@@ -120,6 +120,7 @@ void MinesMulti::Client(){
 	te2->setVisible(true);
 	bt4->setVisible(true);
 	ServerClient = false;
+        //Minerhalten(QByteArray("bbbbbbbbbbbbbnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")); //Testcase für ein Spielfeld
 	//cs = new ChatServer(this,false);
 }
 
@@ -256,7 +257,7 @@ void MinesMulti::Minerhalten(QByteArray m){
         break;
     default: //Feldinformationen auf Spielfeld übertragen
         FeldSichtbar();
-        Mines = (11*11)-13;
+        Mines = (10*10)-13;
         lab->setText(QString::number(Mines)); //Anzeige verbleibender freier Felder
 	QString m2 = QString(m);
 	int c = 0;
@@ -328,9 +329,10 @@ void MinesMulti::Minerhalten(QByteArray m){
 
 void MinesMulti::finden(int c, QPoint p){
     Mines--;//verbleibende freie Felder werden runtergezählt
+    qDebug() << Mines;
     lab->setText(QString::number(Mines));
     if (Mines == 0){
-        this->WIN();
+        //this->WIN();
     }
     int a = 0;
     int b = 0;
@@ -339,23 +341,29 @@ void MinesMulti::finden(int c, QPoint p){
         b = (p.y()-50)/50;
         qDebug() << a << b;
         if(a >= 0  && (b+1) >= 0 && a <10 && (b+1)<10 ){
-            if(Minen[a][b+1]->isEnabled()){
-                Minen[a][b]->klick();
+            if(Minen[a][b+1]->aktiv == true){
+                qDebug() << "test";
+                Minen[a][b+1]->klick();
+                Minen[a][b+1]->deaktivieren();
+
             }
         }
         if((a+1)>=0 && b >= 0 && (a+1) < 10 && b <10){
-            if(Minen[a+1][b]->isEnabled()){
+            if(Minen[a+1][b]->aktiv == true){
                 Minen[a+1][b]->klick();
+                Minen[a+1][b]->deaktivieren();
             }
         }
         if(a >= 0 && (b-1) >= 0 && a < 10 && (b-1) < 10){
-            if(Minen[a][b-1]->isEnabled()){
+            if(Minen[a][b-1]->aktiv == true){
                 Minen[a][b-1]->klick();
+                Minen[a][b-1]->deaktivieren();
             }
         }
         if((a-1)>= 0 && b >= 0 && (a-1)<10 && b < 10){
-            if(Minen[a-1][b]->isEnabled()){
+            if(Minen[a-1][b]->aktiv == true){
                 Minen[a-1][b]->klick();
+                Minen[a-1][b]->deaktivieren();
             }
         }
     }
