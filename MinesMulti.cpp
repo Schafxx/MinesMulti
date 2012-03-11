@@ -7,6 +7,8 @@
 #include <QTextEdit>
 #include <QTextDocument>
 #include <QLabel>
+#include <QFile>
+#include <QTextStream>
 
 
 #include "osrng.h"
@@ -159,23 +161,30 @@ void MinesMulti::Verbinden(){
 		cs = new ChatServer(this, te2->toPlainText(), false);
 		gc = new GameClient(this, te2->toPlainText(), true);
 		gs = new GameServer(this, te2->toPlainText(), false);
-		connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray)));
-                connect(gc, SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray)));
+                connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray))); //Verbinden des Erhaltens einer Nchricht und der Anzeige
+                connect(gc, SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray))); // Verbinden des Erhaltens einer Spielinformation und der Verarbeitung
 	}else{ //Server ertsellen
 		cc = new ChatClient(this, te2->toPlainText(), false);
 		cs = new ChatServer(this, te2->toPlainText(), true);
 		gc = new GameClient(this, te2->toPlainText(), false);
 		gs = new GameServer(this, te2->toPlainText(), true);
-		connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));
-                connect(gs,SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray)));
+                connect(cs, SIGNAL(rec(QByteArray)), this, SLOT(read(QByteArray)));//Verbinden des Erhaltens einer Nchricht und der Anzeige
+                connect(gs,SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray))); // Verbinden des Erhaltens einer Spielinformation und der Verarbeitung
 	}
 }
 
 void MinesMulti::read(QByteArray D){ //Erhalten einer Nachricht
-    QString *t = new QString(D); 
+    QFile file("log");
+    if (!file.open(QIODevice::Append | QIODevice::Text)) //Öffnen der Datei mit dem Modus "Append"
+         return;
+
+     QTextStream out(&file); //Textstream an Datei binden
+
+
+    QString *t = new QString(D);
     const char* text = t->toLatin1();
         if(crypto){//Entschlüsseln der Nachricht
-            char* textcrypto = const_cast<char*>(text);
+            char* textcrypto = const_cast<char*>(text); //Präparieren der Daten zum Entschlüsseln
             AutoSeededRandomPool rnd;
             byte iv[AES::BLOCKSIZE];
             rnd.GenerateBlock(iv, AES::BLOCKSIZE);
@@ -184,10 +193,14 @@ void MinesMulti::read(QByteArray D){ //Erhalten einer Nachricht
 
             CFB_Mode<AES>::Decryption cfbDecryption((byte*)key, 16, iv);
             cfbDecryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen);
+
             tb->append(QString(textcrypto));
+            out << QString(textcrypto) << "\n";
 	}else{
 		tb->append(D);
+                out << QString(D) << "\n";
 	}
+        file.close();
 }
 
 
@@ -199,17 +212,14 @@ void MinesMulti::FeldSichtbar(){//Spielfeld sichtbar machen
 	}
 }
 
-void MinesMulti::nachricht(QByteArray msg){
-	tb->append(QString(msg));
-}
 
 void MinesMulti::MineLegen(){
 	if (Mines > 0){
-                lab->setText(QString::number(Mines));
-		Mines--;
+                lab->setText(QString::number(Mines)); //Anzeige verbleibender Minen
+                Mines--;
 	}else{
 		QByteArray *Q = new QByteArray();
-		for (int a = 0; a < 10; a++){
+                for (int a = 0; a < 10; a++){ //Erstellen der Spielinformation, welche angibt, wo Minen liegen
 			for (int b = 0; b < 10; b++){
 				if(!Minen[a][b]->isEnabled()){
 					Q->append("b");
@@ -219,7 +229,7 @@ void MinesMulti::MineLegen(){
 				Minen[a][b]->deaktivieren();
 			}
 		}
-		gs->write(Q);
+                gs->write(Q); //Verschicken des Spielfeldes
 		
 		
 	}
@@ -228,7 +238,7 @@ void MinesMulti::MineLegen(){
 void MinesMulti::Minerhalten(QByteArray m){
     qDebug() << m;
     int test = 0;
-    if(m == QByteArray("WIN")){
+    if(m == QByteArray("WIN")){ //Präparieren der Spielinformation für die Verarbeitung
         test = 1;
 
     }
@@ -244,10 +254,10 @@ void MinesMulti::Minerhalten(QByteArray m){
     case 2:
         this->LOSE();
         break;
-    default:
+    default: //Feldinformationen auf Spielfeld übertragen
         FeldSichtbar();
         Mines = (11*11)-12;
-        lab->setText(QString::number(Mines));
+        lab->setText(QString::number(Mines)); //Anzeige verbleibender freier Felder
 	QString m2 = QString(m);
 	int c = 0;
 
@@ -255,9 +265,9 @@ void MinesMulti::Minerhalten(QByteArray m){
 		for(int b = 0; b < 10; b++){
 			if(m2[c] == QChar(98)){
 				Minen[a][b]->Mine = true;
-				connect(Minen[a][b], SIGNAL(Explosion()), this, SLOT(LOSE()));
-			}else{
-				try{
+                                connect(Minen[a][b], SIGNAL(Explosion()), this, SLOT(LOSE())); // Klick auf Mine führt zur Niederlage
+                        }else{ //Anzahl benachbarter Minen erkennen; Auffalngen der Exceptions, die durch fehlende Felder (außerhalb des Spielfeldes) ausgelöst werden
+                                try{
 					if(m2.at(c+1) == QChar(98)){
 						Minen[a][b]->Anzahl++;
 					}
@@ -316,21 +326,36 @@ void MinesMulti::Minerhalten(QByteArray m){
     }
 }
 
-void MinesMulti::finden(){
+void MinesMulti::finden(){ //verbleibende freie Felder werden runtergezählt
     Mines--;
     lab->setText(QString::number(Mines));
+    if (Mines == 0){
+        this->WIN();
+    }
 
 }
 
 void MinesMulti::LOSE(){
     lab->setText("You have lost the game!");
+    QByteArray *w = new QByteArray("WIN");
+    if (ServerClient){ //Senden der Information des eigenen Verlierens an den anderen Spieler
+        gs->write(w);
+    } else {
+        gc->write(w);
+    }
 }
 
 void MinesMulti::WIN(){
     lab->setText("You have won the game!");
+    QByteArray *l = new QByteArray("LOSE");
+    if(ServerClient){ //Senden der Information des eigenen Gewinnens an den anderen Spieler
+        gs->write(l);
+    }else{
+        gc->write(l);
+    }
 }
 
-void MinesMulti::crypt(){
+void MinesMulti::crypt(){ //Passworteingabe auslesen
     if(le->text().length()%8 == 0 && le->text().length() >7){
         crypto = true;
         const char* key_const;

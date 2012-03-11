@@ -1,9 +1,3 @@
-/*
- * ChatClient.cpp
- *
- *  Created on: 04.02.2012
- *      Author: julian
- */
 
 #include "ChatClient.h"
 #include <QObject>
@@ -21,7 +15,7 @@ ChatClient::ChatClient(QObject *parent, QString ip, bool a) {//ip, IP-Adresse, m
 		host = new QHostAddress(ip);
 		udpSocket->bind(QHostAddress("0.0.0.0"), 7755); //Akzeptieren von Nachrichten von jeder beliebigen Adresse
 		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read())); //verbinden vom Eingehen neuer Nachrichten und der read-Metjode
-		//udpSocket->writeDatagram("",*host,7755);
+
 	}
 
 }

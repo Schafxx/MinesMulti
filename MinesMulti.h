@@ -35,10 +35,10 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
                 void WIN();
                 void crypt();
                 void finden();
-		//void readC(QByteArray D);
+
 
 	public:
-		void nachricht(QByteArray msg);
+
 		QByteArray *QBA;
                 QPushButton *bt, *bt2, *bt3, *bt4, *bt5;
                 QLabel *lab;

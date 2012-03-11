@@ -1,45 +1,37 @@
-/*
- * GameClient.cpp
- *
- *  Created on: 04.02.2012
- *      Author: julian
- */
 
 #include "GameClient.h"
 
-GameClient::GameClient(QObject *parent, QString ip, bool a) {
-	// TODO Auto-generated constructor stub
+GameClient::GameClient(QObject *parent, QString ip, bool a) {//ip, IP-Adresse, mit der sich verbunden werden soll
+
 	b = a;
 	if (a){
 		udpSocket = new QUdpSocket(parent);;
-		host = new QHostAddress(ip);
-		udpSocket->bind(QHostAddress("0.0.0.0"), 7756);
-		QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));
-		//udpSocket->writeDatagram("",*host,7755);
+                host = new QHostAddress(ip);
+                udpSocket->bind(QHostAddress("0.0.0.0"), 7756);//Akzeptieren neuer Nachrichten von allen Adressen an Port 7756
+                QObject::connect(udpSocket, SIGNAL(readyRead()), this, SLOT(read()));//Verbinden von Ausstehenden Nachrichten und der read-Methode
 	}
 
 
 }
 
 void GameClient::read(){
-	qDebug() << "Client Read";
+
     while (udpSocket->hasPendingDatagrams()) {
          QByteArray datagram;
          datagram.resize(udpSocket->pendingDatagramSize());
          quint16 senderPort;
-         udpSocket->readDatagram(datagram.data(), datagram.size(),
+         udpSocket->readDatagram(datagram.data(), datagram.size(),//Auslesen des Datagrams
                                  &sender, &senderPort);
 
-         emit rec(datagram);
+         emit rec(datagram);//Benachrichtigen über neue Nachricht
     }
 
 }
 
 void GameClient::write(QByteArray *msg){
-	qDebug() << "Client Write" << host;
 	udpSocket->writeDatagram(*msg, *host, 7756);
 }
 
 GameClient::~GameClient() {
-	// TODO Auto-generated destructor stub
+
 }
