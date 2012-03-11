@@ -338,30 +338,35 @@ void MinesMulti::finden(int c, QPoint p){
         a = (p.x()-50)/50;
         b = (p.y()-50)/50;
         qDebug() << a << b;
-        if(a>=-1 && b >= 0){
+        if(a>=-1 && b >= 0 && (a+1)<10 && b <10){
             if(Minen[a+1][b]->isEnabled())
             Minen[a+1][b]->klick();
         }
-        if(a>0 && b > 0){
+        if(a>0 && b > 0 && (a-1)<10 && (b-1) <10){
             if(Minen[a-1][b-1]->isEnabled())
             Minen[a-1][b-1]->klick();
         }
-        if(a >0 && b >= 0){
+        if(a >0 && b >= 0 && (a-1)<10 && b <10){
             if(Minen[a-1][b]->isEnabled())
             Minen[a-1][b]->klick();
         }
-        if(a > 0 && b >= -1){
+        if(a > 0 && b >= -1 && (a-1)<10 && (b+1) <10){
             if(Minen[a-1][b+1]->isEnabled())
             Minen[a-1][b+1]->klick();
         }
-        if(a >= -1 && b > 0){
+        if(a >= -1 && b > 0 && (a+1)<10 && (b-1) <10){
             if(Minen[a+1][b-1]->isEnabled())
             Minen[a+1][b-1]->klick();
         }
-        if(a>=-1 && b >=0){
-            if(Minen[a][b]->isEnabled())
+        if(a >= 0 && b >= -1 && (a)<10 && (b+1) <10){
+            if(Minen[a][b+1]->isEnabled())
+            Minen[a][b+1]->klick();
+        }
+        if(a >=-1 && b >= 0 && (a+1)<10 && b <10){
+            if(Minen[a+1][b]->isEnabled())
             Minen[a+1][b]->klick();
         }
+
         if(a >= -1 && b>=-1){
             if(Minen[a+1][b+1]->isEnabled())
             Minen[a+1][b+1]->klick();
