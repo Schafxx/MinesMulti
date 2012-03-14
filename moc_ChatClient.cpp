@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ChatClient.h'
 **
-** Created: Sun Mar 11 19:06:11 2012
+** Created: Wed Mar 14 00:17:54 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ChatClient[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,12 +35,14 @@ static const uint qt_meta_data_ChatClient[] = {
 
  // slots: signature, parameters, type, tag, flags
       30,   11,   11,   11, 0x0a,
+      41,   37,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ChatClient[] = {
     "ChatClient\0\0D\0rec(QByteArray)\0read()\0"
+    "msg\0write(QByteArray*)\0"
 };
 
 const QMetaObject ChatClient::staticMetaObject = {
@@ -74,9 +76,10 @@ int ChatClient::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: rec((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         case 1: read(); break;
+        case 2: write((*reinterpret_cast< QByteArray*(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

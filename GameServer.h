@@ -15,7 +15,7 @@ public:
 	GameServer(QObject *parent = 0, QString ip = "", bool a=false);
 	virtual ~GameServer();
 	bool b;
-	quint16 senderPort;
+private:
 	QHostAddress sender;
 	QHostAddress *addr;
 public slots:

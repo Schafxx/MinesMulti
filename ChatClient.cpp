@@ -9,7 +9,7 @@
 
 
 ChatClient::ChatClient(QObject *parent, QString ip, bool a) {//ip, IP-Adresse, mit der sich verbunden werden soll
-	b = a;						     //a gibt an ob es ausgeführt werden soll
+        b = a;                               //a gibt an ob es ausgeführt werden soll
 	if (a){
 		udpSocket = new QUdpSocket(parent);;       
 		host = new QHostAddress(ip);

@@ -34,6 +34,7 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
 
     lab = new QLabel(this); //enthällt Nachricht über Ausstehende Minen/Felder ohne Mienen entdeckt und Sieg/Niederlage
     lab->move(10,10);
+    lab->setFixedWidth(200);
     lab->setVisible(true);
 
     bt = new QPushButton("Minenleger",this); //Auswahl des Spielermodus
@@ -89,10 +90,13 @@ MinesMulti::MinesMulti(QMainWindow *parent) : QMainWindow(parent){
     le = new QLineEdit(this); //Eingabefeld für das Passwort
     le->move(this->width()/2-150,this->height()/2+230);
     le->setFixedWidth(150);
-    le->setEchoMode(QLineEdit::Password);
+    le->setText("8 oder 16 Zeichen");
+
 }
 
 void MinesMulti::Server(){
+        le->setEchoMode(QLineEdit::Password);
+        le->setText("");
 	bt->setVisible(false); //Auswahl der sichtbaren Module in dem Spielmodus
 	bt2->setVisible(false);
 	tb->setVisible(true);
@@ -101,7 +105,7 @@ void MinesMulti::Server(){
 	te2->setVisible(true);
 	bt4->setVisible(true);
         ServerClient = true; //ServerClient = true bedeutet Server; ServerClient = false bedeutet Client
-	FeldSichtbar();
+
 	for (int a = 0; a < 10; a++){ //Verbinden des Klicks und der Methode MineLegen
 		for (int b = 0; b < 10; b++){
 			connect(Minen[a][b],SIGNAL(clicked()),this,SLOT(MineLegen()));
@@ -120,11 +124,14 @@ void MinesMulti::Client(){
 	te2->setVisible(true);
 	bt4->setVisible(true);
 	ServerClient = false;
+        le->setText("");
+        le->setEchoMode(QLineEdit::Password);
         //Minerhalten(QByteArray("bbbbbbbbbbbbbnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")); //Testcase für ein Spielfeld
 	//cs = new ChatServer(this,false);
 }
 
 void MinesMulti::Senden(){
+        QByteArray *QBA;
 	const char *text = te->toPlainText().toLatin1(); //Konvertieren des zu sendenden textes für die Verschlüsselung
 	if (crypto){
 		char *textcrypto = const_cast<char*>(text); //deaktivieren der Konstanten-Eigenschaft
@@ -134,7 +141,7 @@ void MinesMulti::Senden(){
 		int messageLen = (int)strlen(textcrypto) + 1;
 
                 //char *key = "1234567812345678";
-		CFB_Mode<AES>::Encryption cfbEncryption((byte*)key, 16, iv);
+                CFB_Mode<AES>::Encryption cfbEncryption((byte*)key, sizeof(key), iv);
 		cfbEncryption.ProcessData((byte*)textcrypto, (byte*)textcrypto, messageLen); //AES-verschlüsselung anwenden
 
 		QBA = new QByteArray(textcrypto);
@@ -158,6 +165,7 @@ void MinesMulti::Verbinden(){
 	te2->setVisible(false);
 	bt4->setVisible(false);
 	if (!ServerClient){ //Client erstellen
+
 		cc = new ChatClient(this, te2->toPlainText(), true);
 		cs = new ChatServer(this, te2->toPlainText(), false);
 		gc = new GameClient(this, te2->toPlainText(), true);
@@ -165,6 +173,7 @@ void MinesMulti::Verbinden(){
                 connect(cc, SIGNAL(rec(QByteArray)), this,SLOT(read(QByteArray))); //Verbinden des Erhaltens einer Nchricht und der Anzeige
                 connect(gc, SIGNAL(rec(QByteArray)), this, SLOT(Minerhalten(QByteArray))); // Verbinden des Erhaltens einer Spielinformation und der Verarbeitung
 	}else{ //Server ertsellen
+                FeldSichtbar();
 		cc = new ChatClient(this, te2->toPlainText(), false);
 		cs = new ChatServer(this, te2->toPlainText(), true);
 		gc = new GameClient(this, te2->toPlainText(), false);
@@ -332,37 +341,35 @@ void MinesMulti::finden(int c, QPoint p){
     qDebug() << Mines;
     lab->setText(QString::number(Mines));
     if (Mines == 0){
-        //this->WIN();
+        this->WIN(); //Alle minenfreien Felder wurden aufgedeckt, daraus filgt, der Spieler hat gewonnen
     }
     int a = 0;
     int b = 0;
-    if (c == 0){
-        a = (p.x()-50)/50;
+    if (c == 0){ //Wenn kein Feld mit einer Mine in direkter Umgebung zu dem Feld liegt
+        a = (p.x()-50)/50; //Umrechnung der Koordinaten in die Stellen des 2-dimensionalen Arrays
         b = (p.y()-50)/50;
-        qDebug() << a << b;
         if(a >= 0  && (b+1) >= 0 && a <10 && (b+1)<10 ){
             if(Minen[a][b+1]->aktiv == true){
-                qDebug() << "test";
-                Minen[a][b+1]->klick();
+                Minen[a][b+1]->klick(); //Klick auf das Feld oberhalb des ersten Feldes wird simuliert
                 Minen[a][b+1]->deaktivieren();
 
             }
         }
         if((a+1)>=0 && b >= 0 && (a+1) < 10 && b <10){
             if(Minen[a+1][b]->aktiv == true){
-                Minen[a+1][b]->klick();
+                Minen[a+1][b]->klick(); //Klick auf das Feld rechts des ersten Feldes wird simuliert
                 Minen[a+1][b]->deaktivieren();
             }
         }
         if(a >= 0 && (b-1) >= 0 && a < 10 && (b-1) < 10){
             if(Minen[a][b-1]->aktiv == true){
-                Minen[a][b-1]->klick();
+                Minen[a][b-1]->klick(); //Klick auf das Feld unterhalbhalb des ersten Feldes wird simuliert
                 Minen[a][b-1]->deaktivieren();
             }
         }
         if((a-1)>= 0 && b >= 0 && (a-1)<10 && b < 10){
             if(Minen[a-1][b]->aktiv == true){
-                Minen[a-1][b]->klick();
+                Minen[a-1][b]->klick(); //Klick auf das Feld links des ersten Feldes wird simuliert
                 Minen[a-1][b]->deaktivieren();
             }
         }

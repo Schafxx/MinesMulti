@@ -13,12 +13,13 @@ public:
 	virtual ~GameClient();
 	void write(QByteArray *msg);
 	bool b;
-	QHostAddress sender;
+
 public slots:
 	void read();
 private:
 	QHostAddress *host;
 	QUdpSocket *udpSocket;
+        QHostAddress sender;
 signals:
 	void rec(QByteArray D);
 };

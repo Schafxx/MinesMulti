@@ -28,6 +28,7 @@ void Feld::klick(){
 		}else{
                         this->setText(QString::number(Anzahl));
                         emit notExplosion(Anzahl, this->pos());
+
 		}
 
 	}

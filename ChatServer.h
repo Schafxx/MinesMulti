@@ -14,14 +14,15 @@ public:
 	virtual ~ChatServer();
 	bool b;
 
-	QHostAddress sender;
-	QHostAddress *addr;
 
 public slots:
 	void read();
 	void write(QByteArray *msg);
 private:
 	QUdpSocket *udpSocket;
+
+        QHostAddress sender;
+        QHostAddress *addr;
 signals:
 	void rec(QByteArray D);
 };

@@ -19,7 +19,7 @@ void GameServer::read(){
 	while (udpSocket->hasPendingDatagrams()){
 		QByteArray datagram;
 		datagram.resize(udpSocket->pendingDatagramSize());
-
+                quint16 senderPort;
                 udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);//Auslesen des Datagrams
                 emit rec(datagram);//Benachrichtigen über neue Nachricht
 

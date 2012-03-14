@@ -8,7 +8,7 @@
 #include <QDebug>
 
 ChatServer::ChatServer(QObject *parent, QString ip, bool a) {//ip enthällt die IP-Adreses des Chatpartners
-	b = a;
+        b = a;
 	if (a){
 		udpSocket = new QUdpSocket(parent);
 		addr = new QHostAddress(ip);

@@ -38,9 +38,8 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
                 void finden(int c, QPoint p);
 
 
-	public:
-
-		QByteArray *QBA;
+        private:
+                //QByteArray *QBA;
                 QPushButton *bt, *bt2, *bt3, *bt4, *bt5;
                 QLabel *lab;
 		QTextBrowser *tb;
@@ -51,8 +50,8 @@ class MinesMulti : public QMainWindow, public Ui::MainWindow{
 		ChatClient *cc;
 		GameServer *gs;
 		GameClient *gc;
-		QTextDocument *doc;
-		bool ServerClient;
+                //QTextDocument *doc;	
+                bool ServerClient;
 		int Mines;
 		bool crypto;
                 char *key;
